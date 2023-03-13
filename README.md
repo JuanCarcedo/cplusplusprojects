@@ -1,4 +1,4 @@
-# cplusplusprojects
+# C++ Small projects
 Please find here some programs or pieces of code that I developed using C++.  
 I am mostly using Visual Studio to test these programs.
 
@@ -12,7 +12,7 @@ I am mostly using Visual Studio to test these programs.
 - Directly run ```main.exe``` inside any folder.
 
 ## Projects
-Note that every folder will (unless otherwise noted) hold only one single program.
+Note that every folder will (unless otherwise noted) hold only one single program.  
 <em>List:</em>
 - MenuSelections: Simple program to learn functions.
 
