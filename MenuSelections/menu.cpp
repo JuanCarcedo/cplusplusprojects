@@ -6,7 +6,7 @@
 *******************************/
 #include "menu.h"
 
-// Main call
+// Main call -----------------------
 void control_menu_program() {
 	// Declarations
 	vector<int> v_integers{ 1, 2, 3, 4, 5 };
@@ -21,33 +21,88 @@ void control_menu_program() {
 	cout << "See you next time! \n-- Closing program." << endl;
 }
 
-// Support functions ==============================
+// Control functions ==============================
+void control_print(const vector<int>& v_integers){
+	if (v_integers.empty()) {
+				cout << "[] - the list is empty" << endl;
+	}
+	else {
+		print_vector(v_integers);
+	}
+}
 
-// Get new number into the vector
-void add_number(vector<int>& v_integers) {
+void control_new_number(vector<int>& v_integers) {
 	int new_number{};
 
 	cout << "Input number to add: ";
 	cin >> new_number;
 	
-	v_integers.push_back(new_number);
+	if (new_number){
+		add_number(v_integers, new_number);
+		cout << new_number << " added" << endl;
+	} else {
+		cout << "Not a valid option." << endl;
+	}
 	
-	cout << new_number << " added" << endl;
 }
 
-void calculate_mean(const vector<int>& v_integers) {
+void control_mean_calculation(const vector<int>& v_integers) {
+	if (v_integers.empty()) {
+		cout << "Unable to calculate mean -- no data" << endl;
+	}
+	else {
+		cout << "The mean is: "
+			<< calculate_mean(v_integers) << endl;
+	}
+}
+
+void control_get_smallest(const vector<int>& v_integers){
+	if (v_integers.empty()) {
+		cout << "Unable to determine the smallest number -- no data" << endl;
+	}
+	else {
+		cout << "The smallest number is "
+			 << get_smallest_number(v_integers) << endl;
+	}
+}
+
+void control_get_largest(const vector<int>& v_integers){
+	if (v_integers.empty()) {
+		cout << "Unable to determine the largest number -- no data" << endl;
+	}
+	else {
+		cout << "The largest number is "
+	 		 << get_largest_number(v_integers) << endl;
+	}
+}
+
+// Default action if no choice selected
+void control_default(){
+	cout << "Unknown selection, please try again" << endl;
+}
+
+
+// Support functions ==============================
+
+// Get new number into the vector
+void add_number(vector<int>& v_integers, int new_number) {
+	v_integers.push_back(new_number);
+}
+
+double calculate_mean(const vector<int>& v_integers) {
 	int number_calculator{ 0 };
+	double mean{0.0};
 
 	for (auto item : v_integers) {
 		number_calculator += item;
 	}
+	
+	mean = static_cast<double>(number_calculator) / v_integers.size();
 
-	cout << "The mean is: "
-		<< static_cast<double>(number_calculator) / v_integers.size()
-		<< endl;
+	return mean;
 }
 
-void get_smallest_number(const vector<int>& v_integers) {
+int get_smallest_number(const vector<int>& v_integers) {
 	int number_calculator {INT_MAX};
 
 	for (auto item : v_integers) {
@@ -56,10 +111,10 @@ void get_smallest_number(const vector<int>& v_integers) {
 		}
 	}
 
-	cout << "The smallest number is " << number_calculator << endl;
+	return number_calculator;
 }
 
-void get_largest_number(const vector<int>& v_integers) {
+int get_largest_number(const vector<int>& v_integers) {
 	int number_calculator{ INT_MIN };
 
 	for (auto item : v_integers) {
@@ -68,7 +123,7 @@ void get_largest_number(const vector<int>& v_integers) {
 		}
 	}
 
-	cout << "The largest number is " << number_calculator << endl;
+	return number_calculator;
 }
 
 void print_vector(const vector<int>& v_integers) {
@@ -87,7 +142,7 @@ void print_main_menu(const vector<string>& MENU) {
 	}
 }
 
-// change status of running to false
+// change status of running to false - Here for future additions
 void quit_system(bool& running) {
 	running = false;
 }
@@ -121,57 +176,31 @@ void main_menu(vector<int>& v_integers) {
 		case'p':
 		case'P':
 			// Print vector
-			if (v_integers.empty()) {
-				cout << "[] - the list is empty" << endl;
-			}
-			else {
-				print_vector(v_integers);
-			}
-			
+			control_print(v_integers);
 			break;
 
 		case 'a':
 		case 'A':
 			// Add number
-			add_number(v_integers);
-			
+			control_new_number(v_integers);
 			break;
 
 		case 'm':
 		case 'M':
 			// Calculate mean
-			if (v_integers.empty()) {
-				cout << "Unable to calculate mean -- no data" << endl;
-			}
-			else {
-				calculate_mean(v_integers);
-			}
-
+			control_mean_calculation(v_integers);
 			break;
 
 		case 's':
 		case 'S':
 			// Get smallest number
-			if (v_integers.empty()) {
-				cout << "Unable to determine the smallest number -- no data" << endl;
-			}
-			else {
-				get_smallest_number(v_integers);
-			}
-
+			control_get_smallest(v_integers);
 			break;
 
 		case 'l':
 		case 'L':
 			// Get largest number
-			if (v_integers.empty()) {
-				cout << "Unable to determine the largest number -- no data" << endl;
-			}
-			
-			else {
-				get_largest_number(v_integers);
-			}
-			
+			control_get_largest(v_integers);
 			break;
 
 		case 'q':
@@ -180,7 +209,7 @@ void main_menu(vector<int>& v_integers) {
 			break;
 
 		default:
-			cout << "Unknown selection, please try again" << endl;
+			control_default();
 		}
 	}
 }
