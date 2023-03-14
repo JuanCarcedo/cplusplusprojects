@@ -9,6 +9,7 @@ I am mostly using Visual Studio to test these programs.
   
 ## How to use
 - Create your build and run .exe.
+- I used (normally) ```g++ -Wall -std=c++20 *.cpp -o main.exe```
 - Directly run ```main.exe``` inside any folder.
 
 ## Projects
